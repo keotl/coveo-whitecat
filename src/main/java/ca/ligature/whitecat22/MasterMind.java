@@ -14,7 +14,6 @@ public class MasterMind {
         final GameMap gameMap = iPackage.map;
 
 
-
         Networking.sendInit("MyJavaBot");
 
         while (true) {
@@ -36,6 +35,7 @@ public class MasterMind {
                 }
             }
             Networking.sendFrame(moves);
+
         }
 
     }
@@ -74,42 +74,45 @@ public class MasterMind {
     }
 
     private static Direction whereToMove(Location location, GameMap gameMap, int myID) {
+        try {
 
-        Location east = gameMap.getLocation(location, Direction.EAST);
-        Location west = gameMap.getLocation(location, Direction.WEST);
-        Location south = gameMap.getLocation(location, Direction.SOUTH);
-        Location north = gameMap.getLocation(location, Direction.NORTH);
+            Location east = gameMap.getLocation(location, Direction.EAST);
+            Location west = gameMap.getLocation(location, Direction.WEST);
+            Location south = gameMap.getLocation(location, Direction.SOUTH);
+            Location north = gameMap.getLocation(location, Direction.NORTH);
 
-        Site site = location.getSite();
+            Site site = location.getSite();
 
-        if (neighbourFinder.isSurroundedByFriends(location) && location.getSite().strength > 15) {
-            return pushToBorder(location, gameMap, myID);
-        }
-
-        if (site.strength > east.getSite().strength) {
-            if (east.getSite().owner != myID) {
-                return Direction.EAST;
+            if (neighbourFinder.isSurroundedByFriends(location) && location.getSite().strength > 15) {
+                return pushToBorder(location, gameMap, myID);
             }
-        }
-        if (site.strength > west.getSite().strength) {
-            if (west.getSite().owner != myID) {
-                return Direction.WEST;
+
+            if (site.strength > east.getSite().strength) {
+                if (east.getSite().owner != myID) {
+                    return Direction.EAST;
+                }
             }
-        }
-        if (site.strength > south.getSite().strength) {
-            if (south.getSite().owner != myID) {
-                return Direction.SOUTH;
+            if (site.strength > west.getSite().strength) {
+                if (west.getSite().owner != myID) {
+                    return Direction.WEST;
+                }
             }
-        }
-        if (site.strength > north.getSite().strength) {
-            if (north.getSite().owner != myID) {
-                return Direction.NORTH;
+            if (site.strength > south.getSite().strength) {
+                if (south.getSite().owner != myID) {
+                    return Direction.SOUTH;
+                }
             }
-        }
+            if (site.strength > north.getSite().strength) {
+                if (north.getSite().owner != myID) {
+                    return Direction.NORTH;
+                }
+            }
 
 
-        return Direction.STILL;
+            return Direction.STILL;
+        } catch (Exception e) {
+            return Direction.randomDirection();
+        }
     }
-
-
 }
+
