@@ -42,7 +42,7 @@ public class BulletController {
         for (int i = 0; i < gameMap.width; i++) {
             for (int j = 0; j < gameMap.height; j++) {
                 Location potentialLocation = gameMap.getLocation(i, j);
-                if (!isBullet(potentialLocation) && potentialLocation.isFriend(myId) && isInAFencedArea(potentialLocation.toPosition(), gameMap)) {
+                if (bullets.size() < MAX_BULLETS && !isBullet(potentialLocation) && potentialLocation.isFriend(myId) && isInAFencedArea(potentialLocation.toPosition(), gameMap)) {
                     bullets.add(new Bullet(potentialLocation.toPosition()));
                 }
             }
