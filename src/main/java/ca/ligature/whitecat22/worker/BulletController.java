@@ -35,7 +35,7 @@ public class BulletController {
 
     public List<Move> getMoves(GameMap gameMap) {
         elapsedTurns++;
-        if (elapsedTurns > 25) {
+        if (elapsedTurns > 60) {
             removeDeadBullets();
             launchIfNeeded(gameMap);
             createBulletsIfNecessary(gameMap);
