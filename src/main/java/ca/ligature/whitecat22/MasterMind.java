@@ -63,7 +63,10 @@ public class MasterMind {
                 distance++;
                 Location nextLocation = gameMap.getLocation(locationInterator, direction);
                 locationInterator = nextLocation;
+            } else {
+                break;
             }
+
         }
         return distance;
     }
@@ -76,6 +79,10 @@ public class MasterMind {
         Location north = gameMap.getLocation(location, Direction.NORTH);
 
         Site site = location.getSite();
+
+        if (neighbourFinder.isSurroundedByFriends(location) && location.getSite().strength > 15) {
+            return pushToBorder(location, gameMap, myID);
+        }
 
         if (site.strength > east.getSite().strength) {
             if (east.getSite().owner != myID) {
@@ -97,9 +104,7 @@ public class MasterMind {
                 return Direction.NORTH;
             }
         }
-        if (neighbourFinder.isSurroundedByFriends(location)) {
-            return pushToBorder(location, gameMap, myID);
-        }
+
 
         return Direction.STILL;
     }
