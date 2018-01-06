@@ -76,7 +76,7 @@ public class BulletController {
     private void launchIfNeeded(GameMap gameMap) {
         for (Bullet bullet : bullets) {
             if (bullet.isReady(gameMap) && !bullet.isLaunched()) {
-                bullet.launch(Direction.randomDirectionExcludingStill());
+                bullet.launch(Direction.randomVerticalDirection());
             }
         }
     }
