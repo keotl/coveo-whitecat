@@ -37,7 +37,7 @@ public class BulletController {
 
     public List<Move> getMoves(GameMap gameMap) {
         if (DELAYED_START == -1) {
-            Double delay = (10 * Math.sqrt(gameMap.height * gameMap.width));
+            Double delay = (0.2 * Math.sqrt(gameMap.height * gameMap.width));
             DELAYED_START = delay.intValue();
         }
         elapsedTurns++;
