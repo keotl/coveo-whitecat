@@ -63,4 +63,8 @@ public class Location {
     public boolean isStrongerThan(Location otherLocation) {
         return this.getSite().strength > otherLocation.getSite().strength;
     }
+
+    public Position toPosition() {
+        return new Position(x,y);
+    }
 }
