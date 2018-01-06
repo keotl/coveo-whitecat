@@ -18,4 +18,9 @@ public enum Direction {
     public static List<Direction> getAllDirections() {
         return Arrays.asList(NORTH, EAST, SOUTH, WEST);
     }
+
+    public static Direction randomDirectionExcludingStill() {
+        Direction[] values = CARDINALS;
+        return values[new Random().nextInt(values.length)];
+    }
 }
