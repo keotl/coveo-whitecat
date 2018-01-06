@@ -1,5 +1,4 @@
 #!/bin/bash
 
-javac ca.ligature.whitecat22.MyBot.java
-javac ca.ligature.whitecat22.RandomBot.java
-./blitz2k18 -f 2 -d "30 30" "java ca.ligature.whitecat22.MyBot" "java ca.ligature.whitecat22.RandomBot"
+./gradlew build
+./blitz2k18 -f 2 -d "30 30" "java -jar build/libs/coveo-whitecat.jar" "java -jar randombot.jar"
