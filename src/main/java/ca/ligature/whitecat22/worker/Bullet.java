@@ -26,7 +26,9 @@ public class Bullet {
         lastHealth = bulletTile.getSite().strength;
         if (state == BulletState.LAUNCHED) {
             if (timeToLive == -1) {
-                timeToLive = gameMap.height;
+
+                Double maxTTL = gameMap.height * 0.8;
+                this.timeToLive = maxTTL.intValue();
             }
             Move move = new Move(bulletTile, direction);
             Location nextHead = gameMap.getLocation(bulletTile, direction);
