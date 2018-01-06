@@ -24,15 +24,20 @@ public class Scout {
     public List<Move> getMoves() {
         List<Move> moves = new ArrayList<>();
 
-        for (int i = wire.size() - 1; i > 0; i++) {
+        for (int i = wire.size() - 1; i > 0; i--) {
             Location wireTile = wire.get(i);
             if (wireTile == head) {
                 continue;
             }
 
             Location energyDestination = wire.get(i -1);
-            Direction direction = wireTile.getDirectionTo(energyDestination);
-            moves.add(new Move(wireTile, direction));
+            if (wireTile.getSite().strength > 50){
+                Direction direction = wireTile.getDirectionTo(energyDestination);
+                moves.add(new Move(wireTile, direction));
+            }else{
+                moves.add(new Move(wireTile, Direction.STILL));
+            }
+
         }
 
         Location weakestNeighbour = neighbourFinder.getWeakestEnemyNeighbour(head);

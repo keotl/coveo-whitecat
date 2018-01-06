@@ -1,7 +1,7 @@
 apply plugin: 'java'
 
 apply plugin: 'application'
-mainClassName = "ca.ligature.whitecat22.MasterMind"
+mainClassName = "ca.ligature.whitecat22.WhitecatBot"
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -20,6 +20,6 @@ dependencies {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'ca.ligature.whitecat22.MasterMind'
+        attributes 'Main-Class': 'ca.ligature.whitecat22.WhitecatBot'
     }
 }

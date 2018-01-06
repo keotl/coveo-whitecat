@@ -29,6 +29,18 @@ public class WhitecatBot {
 
             moves.addAll(scout.getMoves());
 
+            for (int y = 0; y < gameMap.height; y++) {
+                for (int x = 0; x < gameMap.width; x++) {
+                    final Location location = gameMap.getLocation(x, y);
+                    final Site site = location.getSite();
+                    if(site.owner == myID) {
+                        if (site.strength == 255){
+                            Direction direction = Direction.randomDirection();
+                            moves.add(new Move(location, direction));
+                        }
+                    }
+                }
+            }
 
             Networking.sendFrame(moves);
         }
