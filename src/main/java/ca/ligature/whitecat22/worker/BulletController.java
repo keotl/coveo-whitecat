@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 
 public class BulletController {
 
+    public static int MAX_BULLETS = 3;
+
     private List<Bullet> bullets = new ArrayList<>();
     private Position startingArea;
     private int myId;
@@ -37,9 +39,13 @@ public class BulletController {
     }
 
     private void createBulletsIfNecessary(GameMap gameMap) {
-        if (gameMap.getLocation(startingArea).getSite().owner == myId && !isBullet(startingArea)
-            && isInAFencedArea(startingArea, gameMap)) {
-            bullets.add(new Bullet(startingArea));
+        for (int i = 0; i < gameMap.width; i++) {
+            for (int j = 0; j < gameMap.height; j++) {
+                Location potentialLocation = gameMap.getLocation(i, j);
+                if (!isBullet(potentialLocation) && potentialLocation.isFriend(myId) && isInAFencedArea(potentialLocation.toPosition(), gameMap)) {
+                    bullets.add(new Bullet(potentialLocation.toPosition()));
+                }
+            }
         }
     }
 
