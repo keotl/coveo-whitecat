@@ -1,9 +1,5 @@
-import java.net.*;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+package ca.ligature.whitecat22;
+
 import java.util.List;
 
 public class Networking {

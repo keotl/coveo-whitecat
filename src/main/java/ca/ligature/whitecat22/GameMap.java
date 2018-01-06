@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+package ca.ligature.whitecat22;
+
 public class GameMap{
 
     private final Site[][] contents;

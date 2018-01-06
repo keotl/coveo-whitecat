@@ -1,14 +1,16 @@
+package ca.ligature.whitecat22;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class RandomBot {
+public class MyBot {
     public static void main(String[] args) throws java.io.IOException {
 
         final InitPackage iPackage = Networking.getInit();
         final int myID = iPackage.myID;
         final GameMap gameMap = iPackage.map;
 
-        Networking.sendInit("RandomJavaBot");
+        Networking.sendInit("MyJavaBot");
 
         while(true) {
             List<Move> moves = new ArrayList<Move>();

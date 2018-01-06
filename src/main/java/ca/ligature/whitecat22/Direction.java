@@ -1,3 +1,5 @@
+package ca.ligature.whitecat22;
+
 import java.util.Random;
 
 public enum Direction {

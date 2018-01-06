@@ -1,3 +1,5 @@
+package ca.ligature.whitecat22;
+
 public class Site {
 
     public int production;

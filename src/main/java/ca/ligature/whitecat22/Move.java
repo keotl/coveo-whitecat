@@ -1,3 +1,5 @@
+package ca.ligature.whitecat22;
+
 public class Move {
     public Location loc;
     public Direction dir;
