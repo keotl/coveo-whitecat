@@ -37,9 +37,19 @@ public class MasterMind {
     }
 
 
-    private static Direction pushToBorder(Location location, GameMap gameMap, int myId) {
-        
-    }
+    /*private static Direction pushToBorder(Location location, GameMap gameMap, int myId) {
+        List<Integer> eastWestSouthNorthDistance = new ArrayList<>();
+        int distanceEast = 0;
+        Location locationInterator =  location;
+        while (locationInterator.getSite().owner == myId) {
+            if (gameMap.getLocation(locationInterator, Direction.EAST).getSite().owner == myId) {
+                distanceEast ++;
+                Location nextLocation = new Location()
+                locationInterator =
+            }
+        }
+
+    }*/
 
     private static Direction whereToMove(Location location, GameMap gameMap, int myID) {
 
