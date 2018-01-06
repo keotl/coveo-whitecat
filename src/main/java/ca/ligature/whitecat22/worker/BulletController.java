@@ -18,6 +18,8 @@ public class BulletController {
     private Position startingArea;
     private int myId;
 
+    private int elapsedTurns = 0;
+
     public BulletController(Position startingArea, int myId) {
         this.startingArea = startingArea;
         this.myId = myId;
@@ -32,11 +34,16 @@ public class BulletController {
     }
 
     public List<Move> getMoves(GameMap gameMap) {
-        removeDeadBullets();
-        launchIfNeeded(gameMap);
-        createBulletsIfNecessary(gameMap);
+        elapsedTurns++;
+        if (elapsedTurns > 25) {
+            removeDeadBullets();
+            launchIfNeeded(gameMap);
+            createBulletsIfNecessary(gameMap);
 
-        return bullets.stream().map(bullet -> bullet.getMove(gameMap)).collect(Collectors.toList());
+            return bullets.stream().map(bullet -> bullet.getMove(gameMap)).collect(Collectors.toList());
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     private void removeDeadBullets() {
