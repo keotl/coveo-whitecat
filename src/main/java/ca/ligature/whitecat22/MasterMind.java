@@ -138,7 +138,7 @@ public class MasterMind {
             }
         }
         int ratio = controlledTiles / totalTiles;
-        return (ratio * 100) + 5;
+        return (ratio * 10) + 5;
     }
 
     private static Location getStartingBlock(int myID, GameMap gameMap) {
