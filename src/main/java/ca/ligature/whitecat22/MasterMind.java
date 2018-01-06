@@ -14,7 +14,6 @@ public class MasterMind {
         final GameMap gameMap = iPackage.map;
 
 
-
         Networking.sendInit("MyJavaBot");
 
         while (true) {
