@@ -1,6 +1,7 @@
 package ca.ligature.whitecat22.worker;
 
 import ca.ligature.whitecat22.Direction;
+import ca.ligature.whitecat22.GameMap;
 import ca.ligature.whitecat22.Location;
 import ca.ligature.whitecat22.Move;
 import ca.ligature.whitecat22.NeighbourFinder;
@@ -13,12 +14,14 @@ public class Scout {
     private Location head;
     private NeighbourFinder neighbourFinder;
     private List<Location> wire;
+    private GameMap gameMap;
 
-    public Scout(Location head, NeighbourFinder neighbourFinder) {
+    public Scout(Location head, NeighbourFinder neighbourFinder, GameMap gameMap) {
         this.head = head;
         this.neighbourFinder = neighbourFinder;
         wire = new ArrayList<>();
         wire.add(head);
+        this.gameMap = gameMap;
     }
 
     public List<Move> getMoves() {
@@ -35,7 +38,7 @@ public class Scout {
             moves.add(new Move(wireTile, direction));
         }
 
-        Location weakestNeighbour = neighbourFinder.getWeakestEnemyNeighbour(head);
+        Location weakestNeighbour = neighbourFinder.getWeakestEnemy(head, gameMap);
 
         if (isAttacking(weakestNeighbour)) {
             moves.add(getHeadMove(weakestNeighbour));

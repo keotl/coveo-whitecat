@@ -20,7 +20,7 @@ public class WhitecatBot {
 
         Networking.sendInit("Whitecat22");
 
-        scout = new Scout(getStartingBlock(myID, gameMap), neighbourFinder);
+        scout = new Scout(getStartingBlock(myID, gameMap), neighbourFinder, gameMap);
 
         while(true) {
             List<Move> moves = new ArrayList<>();

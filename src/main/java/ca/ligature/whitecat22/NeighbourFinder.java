@@ -1,5 +1,6 @@
 package ca.ligature.whitecat22;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,22 +14,23 @@ public class NeighbourFinder {
         this.myId = myId;
     }
 
-    public Location getWeakestEnemyNeighbour(Location location) {
-        List<Position> possibleNeighbours = location.getPossibleNeighbours();
+    public Location getWeakestEnemy(Location location, GameMap gameMap) {
+        List<Location> locations = new ArrayList<>();
+        locations.add(gameMap.getLocation(location, Direction.EAST));
+        locations.add(gameMap.getLocation(location, Direction.WEST));
+        locations.add(gameMap.getLocation(location, Direction.SOUTH));
+        locations.add(gameMap.getLocation(location, Direction.NORTH));
 
-        List<Location> enemies = possibleNeighbours.stream().map(gameMap::getLocation).filter(tile -> tile.isEnemy(myId)).collect(Collectors.toList());
-
-        return getWeakest(enemies);
-    }
-
-    private Location getWeakest(List<Location> enemies) {
-        Location weakest = enemies.get(0);
-        for (Location neighbour : enemies) {
-            if (neighbour.getSite().strength < weakest.getSite().strength) {
-                weakest = neighbour;
+        Location weakest = locations.get(0);
+        for (Location tempLocation : locations) {
+            if (tempLocation.isEnemy(myId) && tempLocation.getSite().strength < weakest.getSite().strength) {
+                weakest = tempLocation;
             }
         }
-        return weakest;
+        if(weakest.isEnemy(myId)) {
+            return weakest;
+        }
+        return location;
     }
 
     public boolean isSurroundedByFriends(Location location) {

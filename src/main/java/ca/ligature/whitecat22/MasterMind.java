@@ -18,10 +18,11 @@ public class MasterMind {
         Networking.sendInit("MyJavaBot");
 
         while (true) {
-            neighbourFinder = new NeighbourFinder(gameMap, myID);
-            List<Move> moves = new ArrayList<Move>();
 
             Networking.updateFrame(gameMap);
+
+            neighbourFinder = new NeighbourFinder(gameMap, myID);
+            List<Move> moves = new ArrayList<Move>();
 
             for (int y = 0; y < gameMap.height; y++) {
                 for (int x = 0; x < gameMap.width; x++) {
@@ -75,40 +76,26 @@ public class MasterMind {
 
     private static Direction whereToMove(Location location, GameMap gameMap, int myID) {
 
-        Location east = gameMap.getLocation(location, Direction.EAST);
-        Location west = gameMap.getLocation(location, Direction.WEST);
-        Location south = gameMap.getLocation(location, Direction.SOUTH);
-        Location north = gameMap.getLocation(location, Direction.NORTH);
-
-        Site site = location.getSite();
-
         if (neighbourFinder.isSurroundedByFriends(location) && location.getSite().strength > 15) {
             return pushToBorder(location, gameMap, myID);
         }
 
-        if (site.strength > east.getSite().strength) {
-            if (east.getSite().owner != myID) {
-                return Direction.EAST;
-            }
-        }
-        if (site.strength > west.getSite().strength) {
-            if (west.getSite().owner != myID) {
-                return Direction.WEST;
-            }
-        }
-        if (site.strength > south.getSite().strength) {
-            if (south.getSite().owner != myID) {
-                return Direction.SOUTH;
-            }
-        }
-        if (site.strength > north.getSite().strength) {
-            if (north.getSite().owner != myID) {
-                return Direction.NORTH;
-            }
+        return chooseDirection(location, gameMap);
+    }
+
+    private static Direction chooseDirection(Location location, GameMap gameMap) {
+        if(neighbourFinder.isSurroundedByFriends(location)) {
+            return Direction.STILL;
         }
 
+        Location weakestLocation = neighbourFinder.getWeakestEnemy(location, gameMap);
+
+        if (location.getSite().strength > weakestLocation.getSite().strength) {
+            return location.getDirectionTo(weakestLocation);
+        }
 
         return Direction.STILL;
+
     }
 
 
