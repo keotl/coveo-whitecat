@@ -32,9 +32,8 @@ public class NeighbourFinder {
     }
 
     public boolean isSurroundedByFriends(Location location) {
-        List<Position> possibleNeighbours = location.getPossibleNeighbours();
+        return Direction.getAllDirections().stream().map(direction -> gameMap.getLocation(location, direction)).noneMatch(l -> l.isEnemy(myId));
 
-        return possibleNeighbours.stream().map(gameMap::getLocation).filter(tile -> tile.isFriend(location.getSite().owner)).collect(Collectors.toList()).size() == 4;
     }
 
 }

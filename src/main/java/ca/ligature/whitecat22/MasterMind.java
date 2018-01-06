@@ -58,7 +58,9 @@ public class MasterMind {
     private static Integer countBorder(Direction direction, Location location, int myId, GameMap gameMap) {
         int distance = 0;
         Location locationInterator = location;
-        while (locationInterator.getSite().owner == myId) {
+        int iterationCount = 0;
+        while (locationInterator.getSite().owner == myId && iterationCount < 100) {
+            iterationCount++;
             if (gameMap.getLocation(locationInterator, direction).getSite().owner == myId) {
                 distance++;
                 Location nextLocation = gameMap.getLocation(locationInterator, direction);
