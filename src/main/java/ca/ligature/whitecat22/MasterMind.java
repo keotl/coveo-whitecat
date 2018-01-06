@@ -94,7 +94,7 @@ public class MasterMind {
 
             Site site = location.getSite();
 
-            if (neighbourFinder.isSurroundedByFriends(location) && location.getSite().strength > 10) {
+            if (neighbourFinder.isSurroundedByFriends(location) && location.getSite().strength > getStrengthLimit(gameMap)) {
                 return pushToBorder(location, gameMap, myID);
             }
 
@@ -124,6 +124,25 @@ public class MasterMind {
         } catch (Exception e) {
             return Direction.randomDirection();
         }
+    }
+
+    private static int getStrengthLimit(GameMap gameMap) {
+        return 15;
+    }
+
+    private static int getControlledTilesPercentage(GameMap gameMap) {
+        int totalTiles = gameMap.height * gameMap.width;
+        int controlledTiles = 0;
+
+        for (int i = 0; i < gameMap.width; i++) {
+            for (int j = 0; j < gameMap.height; j++) {
+                if (gameMap.getLocation(i,j).isFriend(myId)) {
+                    controlledTiles++;
+                }
+            }
+        }
+
+        return (controlledTiles / totalTiles) * 100;
     }
 
     private static int calculateShareThreshold(GameMap gameMap) {
