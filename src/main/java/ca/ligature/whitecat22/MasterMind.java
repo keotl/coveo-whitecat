@@ -94,7 +94,7 @@ public class MasterMind {
 
             Site site = location.getSite();
 
-            if (neighbourFinder.isSurroundedByFriends(location) && location.getSite().strength > calculateShareThreshold(gameMap)) {
+            if (neighbourFinder.isSurroundedByFriends(location) && location.getSite().strength > 10) {
                 return pushToBorder(location, gameMap, myID);
             }
 
