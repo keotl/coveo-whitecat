@@ -46,4 +46,8 @@ public class Bullet {
     public boolean isAtLocation(Position position) {
         return head.x == position.x && head.y == position.y;
     }
+
+    public boolean isLaunched() {
+        return state == BulletState.LAUNCHED;
+    }
 }
