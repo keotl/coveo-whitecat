@@ -27,7 +27,7 @@ public class Bullet {
         if (state == BulletState.LAUNCHED) {
             if (timeToLive == -1) {
 
-                Double maxTTL = 6.0;
+                Double maxTTL = 3.0;
                 this.timeToLive = maxTTL.intValue();
             }
             Move move = new Move(bulletTile, direction);
@@ -47,7 +47,7 @@ public class Bullet {
 
     public boolean isReady(GameMap gameMap) {
         Location bulletTile = gameMap.getLocation(head);
-        return bulletTile.getSite().strength > 80;
+        return bulletTile.getSite().strength > 50;
     }
 
     public boolean isAtLocation(Location location) {
