@@ -7,6 +7,7 @@ import ca.ligature.whitecat22.Move;
 import ca.ligature.whitecat22.Position;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,14 +52,26 @@ public class BulletController {
     }
 
     private void createBulletsIfNecessary(GameMap gameMap) {
+
+        List<Location> potentialBulletLocations = new ArrayList<>();
+
         for (int i = 0; i < gameMap.width; i++) {
             for (int j = 0; j < gameMap.height; j++) {
                 Location potentialLocation = gameMap.getLocation(i, j);
                 if (bullets.size() < MAX_BULLETS && !isBullet(potentialLocation) && potentialLocation.isFriend(myId) && isInAFencedArea(potentialLocation.toPosition(), gameMap)) {
-                    bullets.add(new Bullet(potentialLocation.toPosition()));
+                    potentialBulletLocations.add(potentialLocation);
                 }
             }
         }
+
+        if (!potentialBulletLocations.isEmpty()) {
+            potentialBulletLocations.sort(Comparator.comparing(s -> s.getSite().production));
+            for (int i = bullets.size(); i < MAX_BULLETS; i++) {
+                Location missileLaunchingGround = potentialBulletLocations.get(i);
+                bullets.add(new Bullet(missileLaunchingGround.toPosition()));
+            }
+        }
+
     }
 
     private boolean isInAFencedArea(Position potentialBulletLocation, GameMap gameMap) {
