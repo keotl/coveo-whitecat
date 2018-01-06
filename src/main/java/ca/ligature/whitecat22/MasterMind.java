@@ -37,19 +37,27 @@ public class MasterMind {
     }
 
 
-    /*private static Direction pushToBorder(Location location, GameMap gameMap, int myId) {
+    private static Direction pushToBorder(Location location, GameMap gameMap, int myId) {
         List<Integer> eastWestSouthNorthDistance = new ArrayList<>();
-        int distanceEast = 0;
+        countBorder(eastWestSouthNorthDistance, Direction.EAST, location, myId, gameMap);
+        countBorder(eastWestSouthNorthDistance, Direction.WEST, location, myId, gameMap);
+        countBorder(eastWestSouthNorthDistance, Direction.SOUTH, location, myId, gameMap);
+        countBorder(eastWestSouthNorthDistance, Direction.NORTH, location, myId, gameMap);
+        
+    }
+
+    private static void countBorder(List<Integer> eastWestSouthNorthDistance, Direction direction, Location location, int myId, GameMap gameMap) {
+        int distance = 0;
         Location locationInterator =  location;
         while (locationInterator.getSite().owner == myId) {
-            if (gameMap.getLocation(locationInterator, Direction.EAST).getSite().owner == myId) {
-                distanceEast ++;
-                Location nextLocation = new Location()
-                locationInterator =
+            if (gameMap.getLocation(locationInterator, direction).getSite().owner == myId) {
+                distance++;
+                Location nextLocation = gameMap.getLocation(locationInterator, direction);
+                locationInterator = nextLocation;
             }
         }
-
-    }*/
+        eastWestSouthNorthDistance.add(distance);
+    }
 
     private static Direction whereToMove(Location location, GameMap gameMap, int myID) {
 
