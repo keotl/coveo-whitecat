@@ -67,8 +67,12 @@ public class BulletController {
         if (!potentialBulletLocations.isEmpty()) {
             potentialBulletLocations.sort(Comparator.comparing(s -> s.getSite().production));
             for (int i = bullets.size(); i < MAX_BULLETS; i++) {
-                Location missileLaunchingGround = potentialBulletLocations.get(i);
-                bullets.add(new Bullet(missileLaunchingGround.toPosition()));
+                try {
+                    Location missileLaunchingGround = potentialBulletLocations.get(i);
+                    bullets.add(new Bullet(missileLaunchingGround.toPosition()));
+                } catch (Exception e) {
+                    // Ignored
+                }
             }
         }
 
