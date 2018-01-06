@@ -36,7 +36,7 @@ public class Bullet {
 
     public boolean isReady(GameMap gameMap) {
         Location bulletTile = gameMap.getLocation(head);
-        return bulletTile.getSite().strength > 175;
+        return bulletTile.getSite().strength > 60;
     }
 
     public boolean isAtLocation(Location location) {
