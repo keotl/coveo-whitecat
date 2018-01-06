@@ -23,10 +23,10 @@ public class MasterMind {
         Networking.sendInit("MyJavaBot");
 
         while (true) {
+            Networking.updateFrame(gameMap);
+
             neighbourFinder = new NeighbourFinder(gameMap, myID);
             List<Move> moves = new ArrayList<Move>();
-
-            Networking.updateFrame(gameMap);
 
             for (int y = 0; y < gameMap.height; y++) {
                 for (int x = 0; x < gameMap.width; x++) {
