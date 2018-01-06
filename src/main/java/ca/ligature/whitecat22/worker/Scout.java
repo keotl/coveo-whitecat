@@ -43,6 +43,7 @@ public class Scout {
             newWire.add(weakestNeighbour);
             newWire.addAll(wire);
             wire = newWire;
+            head = weakestNeighbour;
         }
 
         return moves;
