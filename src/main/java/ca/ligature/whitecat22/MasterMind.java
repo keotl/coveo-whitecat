@@ -14,7 +14,7 @@ public class MasterMind {
 
         Networking.sendInit("MyJavaBot");
 
-        while(true) {
+        while (true) {
             List<Move> moves = new ArrayList<Move>();
 
             Networking.updateFrame(gameMap);
@@ -26,7 +26,7 @@ public class MasterMind {
                     final Site site = location.getSite();
 
 
-                    if(site.owner == myID) {
+                    if (site.owner == myID) {
                         moves.add(new Move(location, whereToMove(location, gameMap, myID)));
                     }
                 }
@@ -36,19 +36,24 @@ public class MasterMind {
 
     }
 
-
     private static Direction pushToBorder(Location location, GameMap gameMap, int myId) {
-        List<Integer> eastWestSouthNorthDistance = new ArrayList<>();
-        countBorder(eastWestSouthNorthDistance, Direction.EAST, location, myId, gameMap);
-        countBorder(eastWestSouthNorthDistance, Direction.WEST, location, myId, gameMap);
-        countBorder(eastWestSouthNorthDistance, Direction.SOUTH, location, myId, gameMap);
-        countBorder(eastWestSouthNorthDistance, Direction.NORTH, location, myId, gameMap);
-        
+        Direction closestBorderDirection = Direction.STILL;
+        int closestBorderDistance = 1000;
+
+        for (Direction direction : Direction.getAllDirections()) {
+            int distance = countBorder(direction, location, myId, gameMap);
+            if (distance < closestBorderDistance) {
+                closestBorderDistance = distance;
+                closestBorderDirection = direction;
+            }
+        }
+        return closestBorderDirection;
     }
 
-    private static void countBorder(List<Integer> eastWestSouthNorthDistance, Direction direction, Location location, int myId, GameMap gameMap) {
+
+    private static Integer countBorder(Direction direction, Location location, int myId, GameMap gameMap) {
         int distance = 0;
-        Location locationInterator =  location;
+        Location locationInterator = location;
         while (locationInterator.getSite().owner == myId) {
             if (gameMap.getLocation(locationInterator, direction).getSite().owner == myId) {
                 distance++;
@@ -56,7 +61,7 @@ public class MasterMind {
                 locationInterator = nextLocation;
             }
         }
-        eastWestSouthNorthDistance.add(distance);
+        return distance;
     }
 
     private static Direction whereToMove(Location location, GameMap gameMap, int myID) {
@@ -69,22 +74,22 @@ public class MasterMind {
         Site site = location.getSite();
 
         if (site.strength > east.getSite().strength) {
-            if(east.getSite().owner != myID) {
+            if (east.getSite().owner != myID) {
                 return Direction.EAST;
             }
         }
         if (site.strength > west.getSite().strength) {
-            if(west.getSite().owner != myID) {
+            if (west.getSite().owner != myID) {
                 return Direction.WEST;
             }
         }
         if (site.strength > south.getSite().strength) {
-            if(south.getSite().owner != myID) {
+            if (south.getSite().owner != myID) {
                 return Direction.SOUTH;
             }
         }
         if (site.strength > north.getSite().strength) {
-            if(north.getSite().owner != myID) {
+            if (north.getSite().owner != myID) {
                 return Direction.NORTH;
             }
         }
