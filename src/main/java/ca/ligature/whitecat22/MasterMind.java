@@ -11,21 +11,23 @@ public class MasterMind {
     private static BulletController bulletController;
     private static Location startingBlock;
 
+    private static int myId;
+
     public static void main(String[] args) throws java.io.IOException {
 
         final InitPackage iPackage = Networking.getInit();
-        final int myID = iPackage.myID;
+        myId = iPackage.myID;
         final GameMap gameMap = iPackage.map;
-        startingBlock = getStartingBlock(myID, gameMap);
+        startingBlock = getStartingBlock(myId, gameMap);
 
-        bulletController = new BulletController(startingBlock.toPosition(), myID);
+        bulletController = new BulletController(startingBlock.toPosition(), myId);
 
         Networking.sendInit("MyJavaBot");
 
         while (true) {
             Networking.updateFrame(gameMap);
 
-            neighbourFinder = new NeighbourFinder(gameMap, myID);
+            neighbourFinder = new NeighbourFinder(gameMap, myId);
             List<Move> moves = new ArrayList<Move>();
 
             for (int y = 0; y < gameMap.height; y++) {
@@ -35,9 +37,9 @@ public class MasterMind {
                     final Site site = location.getSite();
 
 
-                    if (site.owner == myID) {
+                    if (site.owner == myId) {
                         if (!bulletController.isBullet(location)) {
-                            moves.add(new Move(location, whereToMove(location, gameMap, myID)));
+                            moves.add(new Move(location, whereToMove(location, gameMap, myId)));
                         }
                     }
                 }
@@ -92,7 +94,7 @@ public class MasterMind {
 
             Site site = location.getSite();
 
-            if (neighbourFinder.isSurroundedByFriends(location) && location.getSite().strength > 15) {
+            if (neighbourFinder.isSurroundedByFriends(location) && location.getSite().strength > calculateShareThreshold(gameMap)) {
                 return pushToBorder(location, gameMap, myID);
             }
 
@@ -122,6 +124,21 @@ public class MasterMind {
         } catch (Exception e) {
             return Direction.randomDirection();
         }
+    }
+
+    private static int calculateShareThreshold(GameMap gameMap) {
+        int totalTiles = gameMap.height * gameMap.width;
+        int controlledTiles = 0;
+
+        for (int i = 0; i < gameMap.width; i++) {
+            for (int j = 0; j < gameMap.height; j++) {
+                if (gameMap.getLocation(i,j).isFriend(myId)) {
+                    controlledTiles++;
+                }
+            }
+        }
+        int ratio = controlledTiles / totalTiles;
+        return (ratio * 100) + 5;
     }
 
     private static Location getStartingBlock(int myID, GameMap gameMap) {
