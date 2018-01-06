@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class BulletController {
 
-    public static int MAX_BULLETS = 10;
+    public static int MAX_BULLETS = 5;
 
     private List<Bullet> bullets = new ArrayList<>();
     private Position startingArea;
