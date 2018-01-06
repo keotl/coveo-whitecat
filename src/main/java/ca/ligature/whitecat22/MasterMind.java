@@ -87,6 +87,14 @@ public class MasterMind {
     private static Direction whereToMove(Location location, GameMap gameMap, int myID) {
         try {
 
+            Double bleg = gameMap.getDistance(location, getStartingBlock(myID, gameMap));
+
+            if (bleg > gameMap.width * 0.15 && bleg < gameMap.width * 0.18){
+                if (location.getSite().strength < 70){
+                    return Direction.STILL;
+                }
+            }
+
             Location east = gameMap.getLocation(location, Direction.EAST);
             Location west = gameMap.getLocation(location, Direction.WEST);
             Location south = gameMap.getLocation(location, Direction.SOUTH);
