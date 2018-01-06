@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class BulletController {
 
     public int DELAYED_START = -1;
-    public static int MAX_BULLETS = 4;
+    public static int MAX_BULLETS = 10;
 
     private List<Bullet> bullets = new ArrayList<>();
     private Position startingArea;
