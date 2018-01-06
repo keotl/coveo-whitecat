@@ -90,4 +90,8 @@ public class GameMap{
             }
         }
     }
+
+    public Location getLocation(Position position) {
+        return getLocation(position.x, position.y);
+    }
 }

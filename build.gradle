@@ -20,6 +20,6 @@ dependencies {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'ca.ligature.whitecat22.RandomBot'
+        attributes 'Main-Class': 'ca.ligature.whitecat22.WhitecatBot'
     }
 }

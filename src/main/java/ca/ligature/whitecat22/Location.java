@@ -1,5 +1,8 @@
 package ca.ligature.whitecat22;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Location {
 
     // Public for backward compability
@@ -22,5 +25,34 @@ public class Location {
 
     public Site getSite() {
         return site;
+    }
+
+    public List<Position> getPossibleNeighbours() {
+        List<Position> neighbours = new ArrayList<>();
+        neighbours.add(new Position(x + 1, y));
+        neighbours.add(new Position(x - 1, y));
+        neighbours.add(new Position(x, y - 1));
+        neighbours.add(new Position(x, y + 1));
+        return neighbours;
+    }
+
+    public boolean isEnemy(int myId) {
+        return site.owner != myId;
+    }
+
+    public Direction getDirectionTo(Location neighbour) {
+        if (neighbour.x > x) {
+            return Direction.EAST;
+        }
+        if (neighbour.x < x) {
+            return Direction.WEST;
+        }
+        if (neighbour.y > y) {
+            return Direction.SOUTH;
+        }
+        if (neighbour.y < y) {
+            return Direction.NORTH;
+        }
+        return Direction.STILL;
     }
 }
