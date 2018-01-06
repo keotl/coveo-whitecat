@@ -12,6 +12,8 @@ public class Bullet {
     private Direction direction = Direction.EAST;
     private BulletState state;
 
+    private int lastHealth = 0;
+
     private int timeToLive = -1;
 
     public Bullet(Position head) {
@@ -21,6 +23,7 @@ public class Bullet {
 
     public Move getMove(GameMap gameMap) {
         Location bulletTile = gameMap.getLocation(head);
+        lastHealth = bulletTile.getSite().strength;
         if (state == BulletState.LAUNCHED) {
             if (timeToLive == -1) {
                 timeToLive = gameMap.height;
@@ -57,6 +60,6 @@ public class Bullet {
         return state == BulletState.LAUNCHED;
     }
     public boolean isDed() {
-        return timeToLive == 0;
+        return timeToLive == 0 || lastHealth < 20;
     }
 }
