@@ -2,12 +2,14 @@ package ca.ligature.whitecat22;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class NeighbourFinder {
 
     private GameMap gameMap;
     private final int myId;
+    private Random randomGenerator;
 
     public NeighbourFinder(GameMap gameMap, int myId) {
         this.gameMap = gameMap;
@@ -19,7 +21,12 @@ public class NeighbourFinder {
 
         List<Location> enemies = possibleNeighbours.stream().map(gameMap::getLocation).filter(tile -> tile.isEnemy(myId)).collect(Collectors.toList());
 
-        return getWeakest(enemies);
+        Location weakest = getWeakest(enemies);
+        if (weakest == null){
+            int random = randomGenerator.nextInt(possibleNeighbours.size());
+            weakest = gameMap.getLocation(possibleNeighbours.get(random));
+        }
+        return weakest;
     }
 
     private Location getWeakest(List<Location> enemies) {

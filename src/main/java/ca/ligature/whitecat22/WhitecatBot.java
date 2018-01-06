@@ -35,8 +35,8 @@ public class WhitecatBot {
                     final Site site = location.getSite();
                     if(site.owner == myID) {
                         if (site.strength == 255){
-                            Direction direction = Direction.randomDirection();
-                            moves.add(new Move(location, direction));
+                            scout = new Scout(location, neighbourFinder);
+                            moves.addAll(scout.getMoves());
                         }
                     }
                 }
