@@ -59,4 +59,8 @@ public class Location {
     public boolean isFriend(int owner) {
         return !isEnemy(owner);
     }
+
+    public Position toPosition() {
+        return new Position(x,y);
+    }
 }
