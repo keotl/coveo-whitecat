@@ -12,6 +12,8 @@ public class Bullet {
     private Direction direction = Direction.EAST;
     private BulletState state;
 
+    private int timeToLive = -1;
+
     public Bullet(Position head) {
         this.head = head;
         this.state = BulletState.GROWING;
@@ -20,9 +22,13 @@ public class Bullet {
     public Move getMove(GameMap gameMap) {
         Location bulletTile = gameMap.getLocation(head);
         if (state == BulletState.LAUNCHED) {
+            if (timeToLive == -1) {
+                timeToLive = gameMap.height;
+            }
             Move move = new Move(bulletTile, direction);
             Location nextHead = gameMap.getLocation(bulletTile, direction);
             head = new Position(nextHead.x, nextHead.y);
+            timeToLive--;
             return move;
         } else {
             return new Move(bulletTile, Direction.STILL);
@@ -49,5 +55,8 @@ public class Bullet {
 
     public boolean isLaunched() {
         return state == BulletState.LAUNCHED;
+    }
+    public boolean isDed() {
+        return timeToLive == 0;
     }
 }

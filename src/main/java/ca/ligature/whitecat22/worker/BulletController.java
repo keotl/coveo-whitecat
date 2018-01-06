@@ -32,10 +32,15 @@ public class BulletController {
     }
 
     public List<Move> getMoves(GameMap gameMap) {
+        removeDeadBullets();
         launchIfNeeded(gameMap);
         createBulletsIfNecessary(gameMap);
 
         return bullets.stream().map(bullet -> bullet.getMove(gameMap)).collect(Collectors.toList());
+    }
+
+    private void removeDeadBullets() {
+        bullets.removeIf(Bullet::isDed);
     }
 
     private void createBulletsIfNecessary(GameMap gameMap) {
