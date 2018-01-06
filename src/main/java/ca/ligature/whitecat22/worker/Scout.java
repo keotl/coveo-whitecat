@@ -35,15 +35,26 @@ public class Scout {
             moves.add(new Move(wireTile, direction));
         }
 
-        moves.add(getHeadMove());
+        Location weakestNeighbour = neighbourFinder.getWeakestEnemyNeighbour(head);
+
+        if (isAttacking(weakestNeighbour)) {
+            moves.add(getHeadMove(weakestNeighbour));
+            List<Location> newWire = new ArrayList<>();
+            newWire.add(weakestNeighbour);
+            newWire.addAll(wire);
+            wire = newWire;
+        }
 
         return moves;
     }
 
-    private Move getHeadMove() {
-        Location weakestNeighbour = neighbourFinder.getWeakestEnemyNeighbour(head);
-        if (weakestNeighbour.getSite().strength < head.getSite().strength) {
-            Direction direction = head.getDirectionTo(weakestNeighbour);
+    private boolean isAttacking(Location weakestNeighbour) {
+        return weakestNeighbour.getSite().strength < head.getSite().strength;
+    }
+
+    private Move getHeadMove(Location weakestNeighbourn) {
+        if (isAttacking(weakestNeighbourn)) {
+            Direction direction = head.getDirectionTo(weakestNeighbourn);
             return new Move(head, direction);
         }
         return new Move(head, Direction.STILL);
