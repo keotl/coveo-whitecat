@@ -59,4 +59,8 @@ public class Location {
     public boolean isFriend(int owner) {
         return !isEnemy(owner);
     }
+
+    public boolean isStrongerThan(Location otherLocation) {
+        return this.getSite().strength > otherLocation.getSite().strength;
+    }
 }
