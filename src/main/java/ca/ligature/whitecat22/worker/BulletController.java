@@ -37,9 +37,22 @@ public class BulletController {
     }
 
     private void createBulletsIfNecessary(GameMap gameMap) {
-        if (gameMap.getLocation(startingArea).getSite().owner == myId && !isBullet(startingArea)) {
+        if (gameMap.getLocation(startingArea).getSite().owner == myId && !isBullet(startingArea)
+            && isInAFencedArea(startingArea, gameMap)) {
             bullets.add(new Bullet(startingArea));
         }
+    }
+
+    private boolean isInAFencedArea(Position potentialBulletLocation, GameMap gameMap) {
+        Location location = gameMap.getLocation(potentialBulletLocation);
+
+        return Direction.getAllDirections().stream().allMatch(direction -> isSafeTwoForwardsInDirection(direction, location, gameMap));
+    }
+
+    private boolean isSafeTwoForwardsInDirection(Direction direction, Location location, GameMap gameMap) {
+        Location firstNeighbour = gameMap.getLocation(location, direction);
+        Location secondNeighbour = gameMap.getLocation(firstNeighbour, direction);
+        return firstNeighbour.isFriend(myId) && secondNeighbour.isFriend(myId);
     }
 
     private void launchIfNeeded(GameMap gameMap) {
