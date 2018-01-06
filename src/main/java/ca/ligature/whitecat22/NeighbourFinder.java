@@ -1,6 +1,5 @@
 package ca.ligature.whitecat22;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +29,12 @@ public class NeighbourFinder {
             }
         }
         return weakest;
+    }
+
+    public boolean isSurroundedByFriends(Location location) {
+        List<Position> possibleNeighbours = location.getPossibleNeighbours();
+
+        return possibleNeighbours.stream().map(gameMap::getLocation).filter(tile -> tile.isFriend(location.getSite().owner)).collect(Collectors.toList()).size() == 4;
     }
 
 }

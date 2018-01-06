@@ -55,4 +55,8 @@ public class Location {
         }
         return Direction.STILL;
     }
+
+    public boolean isFriend(int owner) {
+        return !isEnemy(owner);
+    }
 }

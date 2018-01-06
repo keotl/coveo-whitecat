@@ -5,6 +5,7 @@ import java.util.List;
 
 public class MasterMind {
 
+    private static NeighbourFinder neighbourFinder;
 
     public static void main(String[] args) throws java.io.IOException {
 
@@ -12,9 +13,12 @@ public class MasterMind {
         final int myID = iPackage.myID;
         final GameMap gameMap = iPackage.map;
 
+
+
         Networking.sendInit("MyJavaBot");
 
         while (true) {
+            neighbourFinder = new NeighbourFinder(gameMap, myID);
             List<Move> moves = new ArrayList<Move>();
 
             Networking.updateFrame(gameMap);
@@ -93,8 +97,12 @@ public class MasterMind {
                 return Direction.NORTH;
             }
         }
+        if (neighbourFinder.isSurroundedByFriends(location)) {
+            return pushToBorder(location, gameMap, myID);
+        }
 
         return Direction.STILL;
     }
+
 
 }
