@@ -93,9 +93,24 @@ public class BulletController {
     private void launchIfNeeded(GameMap gameMap) {
         for (Bullet bullet : bullets) {
             if (bullet.isReady(gameMap) && !bullet.isLaunched()) {
-                bullet.launch(Direction.randomVerticalDirection());
+                if (columnIsAllFriendly(bullet, gameMap)) {
+                    bullet.launch(Direction.randomHorizontalDirection());
+                } else {
+                    bullet.launch(Direction.randomVerticalDirection());
+                }
             }
         }
+    }
+
+    private boolean columnIsAllFriendly(Bullet bullet, GameMap gameMap) {
+        int x = bullet.getColumn();
+        for (int i = 0; i < gameMap.height; i++) {
+            Location locationInColumn = gameMap.getLocation(x, i);
+            if (locationInColumn.isEnemy(myId)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

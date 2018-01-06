@@ -64,4 +64,8 @@ public class Bullet {
     public boolean isDed() {
         return timeToLive == 0 || lastHealth < 20;
     }
+
+    public int getColumn() {
+        return head.x;
+    }
 }

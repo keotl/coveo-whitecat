@@ -28,4 +28,9 @@ public enum Direction {
         Direction[] values = {NORTH, SOUTH};
         return values[new Random().nextInt(values.length)];
     }
+
+    public static Direction randomHorizontalDirection() {
+        Direction[] values = {EAST, WEST};
+        return values[new Random().nextInt(values.length)];
+    }
 }
